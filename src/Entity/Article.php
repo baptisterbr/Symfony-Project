@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,22 +31,6 @@ class Article
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Shop::class, mappedBy="article")
-     */
-    private $shop;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Shop::class, mappedBy="articles")
-     */
-    private $shops;
-
-    public function __construct()
-    {
-        $this->shop = new ArrayCollection();
-        $this->shops = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -89,40 +71,5 @@ class Article
         $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Shop[]
-     */
-    public function getShop(): Collection
-    {
-        return $this->shop;
-    }
-
-    public function addShop(Shop $shop): self
-    {
-        if (!$this->shop->contains($shop)) {
-            $this->shop[] = $shop;
-            $shop->addArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeShop(Shop $shop): self
-    {
-        if ($this->shop->removeElement($shop)) {
-            $shop->removeArticle($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Shop[]
-     */
-    public function getShops(): Collection
-    {
-        return $this->shops;
     }
 }

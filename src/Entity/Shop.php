@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ShopRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,23 +25,7 @@ class Shop
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $zipcode;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Article::class, inversedBy="shop")
-     */
-    private $article;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Article::class, inversedBy="shops")
-     */
-    private $articles;
-
-    public function __construct()
-    {
-        $this->article = new ArrayCollection();
-        $this->articles = new ArrayCollection();
-    }
+    private $zipCode;
 
     public function getId(): ?int
     {
@@ -62,47 +44,15 @@ class Shop
         return $this;
     }
 
-    public function getZipcode(): ?string
+    public function getZipCode(): ?string
     {
-        return $this->zipcode;
+        return $this->zipCode;
     }
 
-    public function setZipcode(string $zipcode): self
+    public function setZipCode(string $zipCode): self
     {
-        $this->zipcode = $zipcode;
+        $this->zipCode = $zipCode;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticle(): Collection
-    {
-        return $this->article;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->article->contains($article)) {
-            $this->article[] = $article;
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        $this->article->removeElement($article);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
     }
 }
