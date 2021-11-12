@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ShopRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +27,23 @@ class Shop
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $zipCode;
+    private $zipcode;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="idShop")
+     */
+    private $orders;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="idShop")
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,14 +62,71 @@ class Shop
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getZipcode(): ?string
     {
-        return $this->zipCode;
+        return $this->zipcode;
     }
 
-    public function setZipCode(string $zipCode): self
+    public function setZipcode(string $zipcode): self
     {
-        $this->zipCode = $zipCode;
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setIdShop($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getIdShop() === $this) {
+                $order->setIdShop(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->addIdShop($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            $article->removeIdShop($this);
+        }
 
         return $this;
     }

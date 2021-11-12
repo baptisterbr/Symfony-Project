@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,22 @@ class Article
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="idArticle")
+     */
+    private $orders;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Shop::class, inversedBy="articles")
+     */
+    private $idShop;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+        $this->idShop = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +87,57 @@ class Article
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->addIdArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            $order->removeIdArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Shop[]
+     */
+    public function getIdShop(): Collection
+    {
+        return $this->idShop;
+    }
+
+    public function addIdShop(Shop $idShop): self
+    {
+        if (!$this->idShop->contains($idShop)) {
+            $this->idShop[] = $idShop;
+        }
+
+        return $this;
+    }
+
+    public function removeIdShop(Shop $idShop): self
+    {
+        $this->idShop->removeElement($idShop);
 
         return $this;
     }
