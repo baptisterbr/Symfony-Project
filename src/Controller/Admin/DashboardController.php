@@ -29,7 +29,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Article', 'fas fa-tags', Article::class)->setController(ArticleCrudController::class);
         yield MenuItem::linkToCrud('Message', 'fas fa-envelope', Message::class)->setController(MessageCrudController::class);
-        yield MenuItem::linkToCrud('Order', 'fas fa-file-invoice', Order::class)->setController(MessageCrudController::class);
+        yield MenuItem::linkToCrud('Order', 'fas fa-file-invoice', Order::class)->setController(OrderCrudController::class);
         yield MenuItem::linkToCrud('Shop', 'fas fa-shopping-cart', Shop::class)->setController(ShopCrudController::class);
         yield MenuItem::linkToCrud('User', 'fas fa-user', User::class)->setController(UserCrudController::class);
     }
