@@ -5,23 +5,30 @@
 
 {% block body %}
 	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
+		.vertical-center {
+			min-height: 100%; /* Fallback for browsers do NOT support vh unit */
+			min-height: 100vh; /* These two lines are counted as one :-)       */
+
+			display: flex;
+			align-items: center;
 		}
 	</style>
-
-	<div class="example-wrapper">
-		{% for shop in shops %}
-			<div>
-				{{shop.name}}
-			</div>
-		{% endfor %}
+	<div class="container vertical-center">
+		<div class="row">
+			{% for shop in shops %}
+				<div class="card col-sm p-0 m-3 img-fluid">
+					{% if shop.img is defined %}
+						<img class="card-img-top" src="{{shop.img}}" alt="Card image cap">
+					{% else %}
+						<img class="card-img-top" src="{{asset('assets/default-shop-img.jpg')}}" alt="Card image cap">
+					{% endif %}
+					<div class="card-body">
+						<h5 class="card-title">{{shop.name}}</h5>
+						<p class="card-text">{{shop.zipcode}}</p>
+						<a href="#" class="btn btn-dark">Voir les produits</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}
