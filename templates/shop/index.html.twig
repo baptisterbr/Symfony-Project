@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShopController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="container vertical-center">
+		<h1 class="text-center">
+			{{shop.name}}
+		</h1>
+		<div class="row">
+			{% for article in shop.articles %}
+				<div class="card col-sm p-0 m-3">
+					<div class="card-body">
+						<h5 class="card-title">{{article.name}}</h5>
+						<p class="card-text">{{article.description}}</p>
+						<a href="#" class="btn btn-dark">Ajouter au panier</a>
+						<small class="text-muted warning">{{article.price}}
+							€</small>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
