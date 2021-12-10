@@ -44,6 +44,17 @@ class Article
      */
     private $idShop;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $shop;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -142,6 +153,30 @@ class Article
     public function removeIdShop(Shop $idShop): self
     {
         $this->idShop->removeElement($idShop);
+
+        return $this;
+    }
+
+    public function getShop(): ?Shop
+    {
+        return $this->shop;
+    }
+
+    public function setShop(?Shop $shop): self
+    {
+        $this->shop = $shop;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
