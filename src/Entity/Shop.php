@@ -35,7 +35,7 @@ class Shop
     private $orders;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="idShop")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="shop")
      */
     private $articles;
 
@@ -120,7 +120,7 @@ class Shop
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->addIdShop($this);
+            $article->setShop($this);
         }
 
         return $this;
@@ -129,7 +129,10 @@ class Shop
     public function removeArticle(Article $article): self
     {
         if ($this->articles->removeElement($article)) {
-            $article->removeIdShop($this);
+            // set the owning side to null (unless already changed)
+            if ($article->getShop() === $this) {
+                $article->setShop(null);
+            }
         }
 
         return $this;
