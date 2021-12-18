@@ -21,18 +21,48 @@
 		<h1 class="text-center">
 			{{shop.name}}
 		</h1>
-		<div class="row">
+		<div class="row justify-content-center mb-3">
 			{% for article in shop.articles %}
-				<div class="card col-sm p-0 m-3">
+				<div class="card col-3 p-0 m-3">
 					<div class="card-body">
-						<h5 class="card-title">{{article.name}}</h5>
+						<h5 class="card-title">
+							{{article.name}}
+							{% if article.quantity > 0 %}
+								<span class="badge bg-success">En stock ({{ article.quantity }})</span>
+							{% else %}
+								<span class="badge bg-danger">Rupture de stock</span>
+							{% endif %}
+						</h5>
 						<p class="card-text">{{article.description}}</p>
-						<a href="#" class="btn btn-dark">Ajouter au panier</a>
-						<small class="text-muted warning">{{article.price / 100 }}
-							€</small>
+						<div class="d-flex justify-content-between align-items-center">
+							<a href="#" class="btn btn-dark">Ajouter au panier</a>
+							<small class="text-muted warning">{{article.price / 100 }}
+								€</small>
+						</div>
 					</div>
 				</div>
 			{% endfor %}
+		</div>
+
+		<div class="m-3">
+			<h2 class="text-center"> Un soucis ? Contactez-nous :</h2>
+			<form class="" action="">
+				<div class="mb-3">
+					<label for="subject" class="form-label">Sujet</label>
+					<input type="text" class="form-control" id="subject" placeholder="Votre problème">
+				</div>
+				<div class="mb-3">
+					<label for="mail" class="form-label">Votre adresse mail</label>
+					<input type="email" class="form-control" id="mail" placeholder="nom@exemple.com">
+				</div>
+				<div class="mb-3">
+					<label for="remark" class="form-label">Vos remarques</label>
+					<textarea class="form-control" id="remark" rows="3"></textarea>
+				</div>
+				<div class="align-items-center">
+					<button class="btn btn-dark align-items-center" type="submit">Envoyez votre message</button>
+				</div>
+			</form>
 		</div>
 	</div>
 {% endblock %}

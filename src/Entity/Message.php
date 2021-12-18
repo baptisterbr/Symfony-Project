@@ -36,13 +36,12 @@ class Message
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCustomer;
+    private $idSeller;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $idSeller;
+    private $mail;
 
     public function getId(): ?int
     {
@@ -85,18 +84,6 @@ class Message
         return $this;
     }
 
-    public function getIdCustomer(): ?User
-    {
-        return $this->idCustomer;
-    }
-
-    public function setIdCustomer(?User $idCustomer): self
-    {
-        $this->idCustomer = $idCustomer;
-
-        return $this;
-    }
-
     public function getIdSeller(): ?User
     {
         return $this->idSeller;
@@ -105,6 +92,18 @@ class Message
     public function setIdSeller(?User $idSeller): self
     {
         $this->idSeller = $idSeller;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
 
         return $this;
     }
