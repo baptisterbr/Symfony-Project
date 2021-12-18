@@ -46,23 +46,29 @@
 
 		<div class="m-3">
 			<h2 class="text-center"> Un soucis ? Contactez-nous :</h2>
-			<form class="" action="">
+			{{form_start(form_contact)}}
+			{# <form class="" action=""> #}
 				<div class="mb-3">
 					<label for="subject" class="form-label">Sujet</label>
-					<input type="text" class="form-control" id="subject" placeholder="Votre problème">
+					{{form_row(form_contact.subject)}}
+					{# <input type="text" class="form-control" id="subject" placeholder="Votre problème"> #}
 				</div>
 				<div class="mb-3">
 					<label for="mail" class="form-label">Votre adresse mail</label>
-					<input type="email" class="form-control" id="mail" placeholder="nom@exemple.com">
+					{{form_row(form_contact.mail)}}
+					{# <input type="email" class="form-control" id="mail" placeholder="nom@exemple.com"> #}
 				</div>
 				<div class="mb-3">
 					<label for="remark" class="form-label">Vos remarques</label>
-					<textarea class="form-control" id="remark" rows="3"></textarea>
+					{{form_row(form_contact.content)}}
+					{# <textarea class="form-control" id="remark" rows="3"></textarea> #}
 				</div>
 				<div class="align-items-center">
-					<button class="btn btn-dark align-items-center" type="submit">Envoyez votre message</button>
+					{{form_row(form_contact.submit)}}
+					{# <button class="btn btn-dark align-items-center" type="submit">Envoyez votre message</button> #}
 				</div>
-			</form>
+			{# </form> #}
+			{{form_end(form_contact)}}
 		</div>
 	</div>
 {% endblock %}

@@ -33,10 +33,10 @@ class Message
     private $timestamp;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idSeller;
+    private $shop;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -72,26 +72,26 @@ class Message
         return $this;
     }
 
-    public function getTimestamp(): ?\DateTimeInterface
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(\DateTimeInterface $timestamp): self
+    public function setTimestamp(\DateTime $timestamp): self
     {
         $this->timestamp = $timestamp;
 
         return $this;
     }
 
-    public function getIdSeller(): ?User
+    public function getShop(): ?Shop
     {
-        return $this->idSeller;
+        return $this->shop;
     }
 
-    public function setIdSeller(?User $idSeller): self
+    public function setShop(?Shop $shop): self
     {
-        $this->idSeller = $idSeller;
+        $this->shop = $shop;
 
         return $this;
     }

@@ -39,10 +39,16 @@ class Shop
      */
     private $articles;
 
+        /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="shop")
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function __toString(){
@@ -132,6 +138,36 @@ class Shop
             // set the owning side to null (unless already changed)
             if ($article->getShop() === $this) {
                 $article->setShop(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setShop($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getShop() === $this) {
+                $message->setShop(null);
             }
         }
 
