@@ -15,13 +15,13 @@
 	<div class="container vertical-center">
 		<div class="row">
 
-			<form method="get">
+			{{ form_start(form_shop_search) }}
 				<label>Recherche</label>
 				<div class="form-group">
-					<input class="form-control" type="text" placeholder="Entrer le code postal">
-					<button type="submit" class="btn btn-dark">Chercher</button>
+					{{ form_row(form_shop_search.zipCode) }}
+					{{ form_row(form_shop_search.submit) }}
 				</div>
-			</form>
+			{{ form_end(form_shop_search) }}
 
 			{% for shop in shops %}
 				<div class="card col-sm p-0 m-3 img-fluid">
