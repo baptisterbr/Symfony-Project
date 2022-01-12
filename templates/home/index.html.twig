@@ -14,6 +14,16 @@
 	</style>
 	<div class="container vertical-center">
 		<div class="row">
+
+			{{ form_start(form_shop_search) }}
+				<label>Recherche</label>
+				<div class="form-group">
+					{{ form_row(form_shop_search.zipCode) }}
+					{{ form_row(form_shop_search.cityName) }}
+					{{ form_row(form_shop_search.submit) }}
+				</div>
+			{{ form_end(form_shop_search) }}
+
 			{% for shop in shops %}
 				<div class="card col-sm p-0 m-3 img-fluid">
 					{% if shop.img is defined %}
@@ -24,6 +34,7 @@
 					<div class="card-body">
 						<h5 class="card-title">{{shop.name}}</h5>
 						<p class="card-text">{{shop.zipcode}}</p>
+						<p class="card-text">{{ shop.cityName }}</p>
 						<a href="{{path('shop_list', {id: shop.id})}}" class="btn btn-dark">Voir les produits</a>
 					</div>
 				</div>

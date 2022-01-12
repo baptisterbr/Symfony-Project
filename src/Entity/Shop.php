@@ -43,6 +43,10 @@ class Shop
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="shop")
      */
     private $messages;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cityName;
 
     public function __construct()
     {
@@ -143,7 +147,6 @@ class Shop
 
         return $this;
     }
-
     /**
      * @return Collection|Message[]
      */
@@ -170,6 +173,18 @@ class Shop
                 $message->setShop(null);
             }
         }
+      
+        return $this
+    }
+  
+    public function getCityName(): ?string
+    {
+        return $this->cityName;
+    }
+
+    public function setCityName(string $cityName): self
+    {
+        $this->cityName = $cityName;
 
         return $this;
     }
