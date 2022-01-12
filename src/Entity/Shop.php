@@ -174,7 +174,7 @@ class Shop
             }
         }
       
-        return $this
+        return $this;
     }
   
     public function getCityName(): ?string
