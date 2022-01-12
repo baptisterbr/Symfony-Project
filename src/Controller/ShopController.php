@@ -26,8 +26,9 @@ class ShopController extends AbstractController
     public function show(int $id): Response{
         $manager = $this->getDoctrine()->getManager();
         $shop = $manager->getRepository(Shop::class)->find($id);
+
         return $this->render('shop/index.html.twig', [
             'shop' => $shop,
-        ]);;  
+        ]);
     }
 }
