@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ShopRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,13 +12,19 @@ use App\Form\ShopSearchFormType;
 
 class HomeController extends AbstractController
 {
+    private $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+
     /**
      * @Route("/", name="home")
      */
     public function index(ShopRepository $repository, Request $request): Response
     {
         $shops = $repository->findAllShops();
-
         $form = $this->createForm(ShopSearchFormType::class);
         $form->handleRequest($request);
 

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShopController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<div class="container vertical-center">
+		<h1 class="text-center">
+			Votre panier
+		</h1>
+		<div class="row justify-content-center mb-3">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Article</th>
+						<th>Description</th>
+						<th>Prix</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for article in panier %}
+						<tr>
+							<td>{{ article.name }}</td>
+							<td>{{ article.description }}</td>
+							<td>{{ article.price / 100 }} €</td>
+							<td><a href="{{ path('removeBasket', { idArticle: article.id }) }}" class="btn btn-link">Supprimer</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td class="font-weight bold">Total :</td>
+						<td>{{ totalPrice / 100 }} €</td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+
+		</div>
+	</div>
+{% endblock %}

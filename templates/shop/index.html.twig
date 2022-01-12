@@ -16,11 +16,11 @@
 			padding: 2px 6px;
 		}
 	</style>
-
 	<div class="container vertical-center">
 		<h1 class="text-center">
 			{{shop.name}}
 		</h1>
+		<a class="nav-link" href="{{ path("basket") }}">Voir mon panier</a>
 		<div class="row justify-content-center mb-3">
 			{% for article in shop.articles %}
 				<div class="card col-3 p-0 m-3">
@@ -35,7 +35,7 @@
 						</h5>
 						<p class="card-text">{{article.description}}</p>
 						<div class="d-flex justify-content-between align-items-center">
-							<a href="#" class="btn btn-dark">Ajouter au panier</a>
+							<a href="{{ path("addBasket", {idArticle: article.id, idShop: shop.id}) }}" class="btn btn-dark" {{ article.quantity == 0 ? 'aria-disabled="true"' : ""}}>Ajouter au panier</a>
 							<small class="text-muted warning">{{article.price / 100 }}
 								€</small>
 						</div>
@@ -46,23 +46,29 @@
 
 		<div class="m-3">
 			<h2 class="text-center"> Un soucis ? Contactez-nous :</h2>
-			<form class="" action="">
+			{{form_start(form_contact)}}
+			{# <form class="" action=""> #}
 				<div class="mb-3">
 					<label for="subject" class="form-label">Sujet</label>
-					<input type="text" class="form-control" id="subject" placeholder="Votre problème">
+					{{form_row(form_contact.subject)}}
+					{# <input type="text" class="form-control" id="subject" placeholder="Votre problème"> #}
 				</div>
 				<div class="mb-3">
 					<label for="mail" class="form-label">Votre adresse mail</label>
-					<input type="email" class="form-control" id="mail" placeholder="nom@exemple.com">
+					{{form_row(form_contact.mail)}}
+					{# <input type="email" class="form-control" id="mail" placeholder="nom@exemple.com"> #}
 				</div>
 				<div class="mb-3">
 					<label for="remark" class="form-label">Vos remarques</label>
-					<textarea class="form-control" id="remark" rows="3"></textarea>
+					{{form_row(form_contact.content)}}
+					{# <textarea class="form-control" id="remark" rows="3"></textarea> #}
 				</div>
 				<div class="align-items-center">
-					<button class="btn btn-dark align-items-center" type="submit">Envoyez votre message</button>
+					{{form_row(form_contact.submit)}}
+					{# <button class="btn btn-dark align-items-center" type="submit">Envoyez votre message</button> #}
 				</div>
-			</form>
+			{# </form> #}
+			{{form_end(form_contact)}}
 		</div>
 	</div>
 {% endblock %}
