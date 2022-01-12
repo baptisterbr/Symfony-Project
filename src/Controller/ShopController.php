@@ -65,7 +65,7 @@ class ShopController extends AbstractController
     }
 
     /**
-     * @Route("/addBasket", name="addBasket")
+     * @Route("/addBasket/{idArticle}/{idShop}", name="addBasket")
      */
     public function addBasket(int $idArticle, int $idShop, Request $request): Response{
         $manager = $this->getDoctrine()->getManager();
@@ -74,9 +74,43 @@ class ShopController extends AbstractController
         $session = $this->requestStack->getSession();
         $panier = $session->get("panier");
 
+        if(!isset($panier)){
+            $panier = [];
+        }
+
         array_push($panier, $article);
 
-        $this->redirectToRoute("/shop/:id", $idShop);
+        $session->set('panier', $panier);
+
+        return $this->redirectToRoute("shop_list", ['id' => $idShop]);
+    }
+
+
+    /**
+     * @Route("/removeBasket/{idArticle}", name="removeBasket")
+     */
+    public function removeBasket(int $idArticle): Response{
+        $manager = $this->getDoctrine()->getManager();
+
+        $session = $this->requestStack->getSession();
+        $panier = $session->get('panier');
+
+        if(is_array($panier)){
+            $index = null;
+            foreach ($panier as $key => $value){
+                if($value->getId() == $idArticle){
+                    $index = $key;
+                }
+            }
+
+            if(isset($index)){
+                unset($panier[$index]);
+            }
+        }
+
+        $session->set('panier', $panier);
+
+        return $this->redirectToRoute('basket');
     }
 
     /**
@@ -87,8 +121,20 @@ class ShopController extends AbstractController
 
         $session = $this->requestStack->getSession();
 
+        $panier = $session->get('panier');
+
+        $total = 0;
+
+        if(is_array($panier)){
+            foreach ($panier as $value){
+                $total+=$value->getPrice();
+            }
+        }
+
+
         return $this->render('shop/panier.html.twig', [
-            'panier' => $session->get('panier')
+            'panier' => $panier,
+            'totalPrice' => $total
         ]);
     }
 }

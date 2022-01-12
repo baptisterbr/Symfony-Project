@@ -21,20 +21,32 @@
 			Votre panier
 		</h1>
 		<div class="row justify-content-center mb-3">
-			{{ dump(panier) }}
 			<table class="table">
 				<thead>
-					<th>Article</th>
-					<th>Quantité</th>
-					<th>Prix</th>
+					<tr>
+						<th>Article</th>
+						<th>Description</th>
+						<th>Prix</th>
+						<th></th>
+					</tr>
 				</thead>
 				<tbody>
 					{% for article in panier %}
-
+						<tr>
+							<td>{{ article.name }}</td>
+							<td>{{ article.description }}</td>
+							<td>{{ article.price / 100 }} €</td>
+							<td><a href="{{ path('removeBasket', { idArticle: article.id }) }}" class="btn btn-link">Supprimer</a></td>
+						</tr>
 					{% endfor %}
 				</tbody>
 				<tfoot>
-
+					<tr>
+						<td></td>
+						<td class="font-weight bold">Total :</td>
+						<td>{{ totalPrice / 100 }} €</td>
+						<td></td>
+					</tr>
 				</tfoot>
 			</table>
 
