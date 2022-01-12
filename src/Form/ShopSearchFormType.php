@@ -14,10 +14,18 @@ class ShopSearchFormType extends AbstractType
     {
         $builder
             ->add('zipCode', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Entrez le code postal'
+                ],
+                'label' => false
+            ])
+            ->add('cityName', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez le nom de la ville'
                 ],
                 'label' => false
             ])

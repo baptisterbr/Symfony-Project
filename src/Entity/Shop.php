@@ -39,6 +39,11 @@ class Shop
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cityName;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -134,6 +139,18 @@ class Shop
                 $article->setShop(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCityName(): ?string
+    {
+        return $this->cityName;
+    }
+
+    public function setCityName(string $cityName): self
+    {
+        $this->cityName = $cityName;
 
         return $this;
     }

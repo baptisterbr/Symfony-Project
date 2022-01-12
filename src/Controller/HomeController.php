@@ -23,8 +23,17 @@ class HomeController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $zipCode = $request->get('shop_search_form')['zipCode'];
+            $cityName = $request->get('shop_search_form')['cityName'];
 
-            $shops = $repository->findBy(['zipcode' => $zipCode]);
+            //$shops = $repository->findBy(['zipcode' => $zipCode]);
+
+            $shops = $repository->createQueryBuilder('o')
+                ->where('o.zipcode LIKE :zipCode')
+                ->andWhere('o.cityName LIKE :cityName')
+                ->setParameter('zipCode', '%'.$zipCode.'%')
+                ->setParameter('cityName', '%'.$cityName.'%')
+                ->getQuery()
+                ->getResult();
 
             return $this->render('home/index.html.twig', [
                 'form_shop_search' => $form->createView(),

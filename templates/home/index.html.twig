@@ -19,6 +19,7 @@
 				<label>Recherche</label>
 				<div class="form-group">
 					{{ form_row(form_shop_search.zipCode) }}
+					{{ form_row(form_shop_search.cityName) }}
 					{{ form_row(form_shop_search.submit) }}
 				</div>
 			{{ form_end(form_shop_search) }}
@@ -33,6 +34,7 @@
 					<div class="card-body">
 						<h5 class="card-title">{{shop.name}}</h5>
 						<p class="card-text">{{shop.zipcode}}</p>
+						<p class="card-text">{{ shop.cityName }}</p>
 						<a href="{{path('shop_list', {id: shop.id})}}" class="btn btn-dark">Voir les produits</a>
 					</div>
 				</div>
