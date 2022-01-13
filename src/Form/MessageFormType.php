@@ -38,7 +38,11 @@ class MessageFormType extends AbstractType
                 ],
                 'label'=> false
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-dark'
+                ]
+            ])
         ;
     }
 

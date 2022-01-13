@@ -6,6 +6,7 @@ use App\Repository\ShopRepository;
 use App\Entity\Shop;
 use App\Entity\Message;
 use App\Entity\Article;
+use App\Form\FilterFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,11 +43,13 @@ class ShopController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $shop = $manager->getRepository(Shop::class)->find($id);
 
-        $form = $this->createForm(MessageFormType::class);
-        $form->handleRequest($request);
+        $messageForm = $this->createForm(MessageFormType::class);
+        $messageForm->handleRequest($request);
 
-        
-        if ($form->isSubmitted() && $form->isValid()) {
+        $filterForm = $this->createForm(FilterFormType::class);
+        $filterForm->handleRequest($request);
+
+        if ($messageForm->isSubmitted() && $messageForm->isValid()) {
             $msg = new Message();
             $msg->setSubject($request->get('message_form')['subject']);
             $msg->setMail($request->get('message_form')['mail']);
@@ -58,8 +61,19 @@ class ShopController extends AbstractController
             $manager->flush();
         }
 
+        if($filterForm->isSubmitted() && $filterForm->isValid()){
+            $articles = $shop->getArticles();
+            foreach($articles as $article){
+                if($article->getPrice() < $request->get('filter_form')['minPrice'] ||
+                    $article->getPrice() > $request->get('filter_form')['maxPrice']){
+                    $shop->removeArticle($article);
+                }
+            }
+        }
+
         return $this->render('shop/index.html.twig', [
-            'form_contact' => $form->createView(),
+            'form_contact' => $messageForm->createView(),
+            'form_filters' => $filterForm->createView(),
             'shop' => $shop
         ]);
     }
