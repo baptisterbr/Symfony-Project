@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+
+<div class="container vertical-center">
+    <div class="row">
+        <h1>Mes commandes</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date de la commande</th>
+                    <th>Article(s) commandé(s)</th>
+                    <th>Total</th>
+                    <th>Commande validé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key,order in myOrders %}
+                    <tr>
+                        <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                        <td>
+                            <ul>
+                                {% for article in articleOrders %}
+
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
