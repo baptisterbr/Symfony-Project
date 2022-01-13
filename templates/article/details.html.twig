@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+
+    .img {
+        width: 50vw;
+        object-fit: cover;
+    }
+
+    .col{
+        width: 50vw;
+    }
+</style>
+    {{ dump(article) }}
+<div class="container-fluid d-flex justify-content-center">
+    <div class="row">
+        <img class="img" src={{ article.url != null ? article.url : "https://decizia.com/blog/wp-content/uploads/2017/06/default-placeholder.png"}}>
+        <div class="col card">
+            <div class="card-top">
+                <h1>{{ article.name }}</h1>
+                <i>Noté {{ article.rating }} / 5 par nos utilisateurs</i>
+                <div>
+                    {% for cat in article.category %}
+                        <a href="" class="link-secondary">{{ cat }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-body">
+                <p>{{ article.description }}</p>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-dark" href={{ path('addBasket', {idArticle: article.id, idShop: shop.id}) }}>Ajouter au panier</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -55,6 +55,21 @@ class Article
      */
     private $quantity;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $category = [];
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $rating;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -151,6 +166,42 @@ class Article
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getCategory(): ?array
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?array $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(float $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }
