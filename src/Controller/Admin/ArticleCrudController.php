@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CurrencyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -29,7 +30,9 @@ class ArticleCrudController extends AbstractCrudController
             TextField::new('description'),
             IntegerField::new("quantity"),
             MoneyField::new("price")->setCurrency("EUR"),
-            AssociationField::new('shop')
+            AssociationField::new('shop'),
+            TextField::new('url'),
+            ArrayField::new('category')
         ];
     }
     
