@@ -39,3 +39,4 @@ security:
     access_denied_url: /access-denied
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/confirm_basket, roles: ROLE_USER }

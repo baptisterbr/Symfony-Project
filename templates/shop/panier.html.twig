@@ -50,6 +50,10 @@
 				</tfoot>
 			</table>
 
+			{% if panier|length > 0 %}
+				<a href="{{ path('comfirm_basket') }}" class="btn btn-dark">Valider ma commande</a>
+			{% endif %}
+
 		</div>
 	</div>
 {% endblock %}

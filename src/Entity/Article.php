@@ -74,6 +74,7 @@ class Article
     {
         $this->orders = new ArrayCollection();
         $this->idShop = new ArrayCollection();
+        $this->articleOrders = new ArrayCollection();
     }
 
     public function __toString(){
@@ -117,33 +118,6 @@ class Article
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->addIdArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            $order->removeIdArticle($this);
-        }
 
         return $this;
     }

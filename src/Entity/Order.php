@@ -41,20 +41,10 @@ class Order
      */
     private $idUser;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="orders")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $idShop;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Article::class, inversedBy="orders")
-     */
-    private $idArticle;
-
     public function __construct()
     {
         $this->idArticle = new ArrayCollection();
+        $this->articleOrders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,42 +96,6 @@ class Order
     public function setIdUser(?User $idUser): self
     {
         $this->idUser = $idUser;
-
-        return $this;
-    }
-
-    public function getIdShop(): ?Shop
-    {
-        return $this->idShop;
-    }
-
-    public function setIdShop(?Shop $idShop): self
-    {
-        $this->idShop = $idShop;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getIdArticle(): Collection
-    {
-        return $this->idArticle;
-    }
-
-    public function addIdArticle(Article $idArticle): self
-    {
-        if (!$this->idArticle->contains($idArticle)) {
-            $this->idArticle[] = $idArticle;
-        }
-
-        return $this;
-    }
-
-    public function removeIdArticle(Article $idArticle): self
-    {
-        $this->idArticle->removeElement($idArticle);
 
         return $this;
     }
