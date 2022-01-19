@@ -22,7 +22,11 @@
 
     </div>
     <div class="card-footer d-flex justify-content-between align-items-center">
-        <a href="{{ path("addBasket", {idArticle: article.id, idShop: shop.id}) }}" class="btn btn-dark" {{ article.quantity == 0 ? 'aria-disabled="true"' : ""}}>Ajouter au panier</a>
+        {% if article.quantity == 0 %}
+            <a class="btn btn-dark disabled-btn">Ajouter au panier</a>
+        {% else %}
+            <a href="{{ path("addBasket", {idArticle: article.id, idShop: shop.id}) }}" class="btn btn-dark">Ajouter au panier</a>
+        {% endif %}
         <a href="{{ path("details", {idArticle: article.id, idShop: shop.id})}}" class="btn btn-dark">Détails</a>
         <small class="text-muted warning">{{article.price / 100 }}
             €</small>
