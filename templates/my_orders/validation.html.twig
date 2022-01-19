@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation{% endblock %}
+
+{% block body %}
+
+<div class="container vertical-center">
+    <div class="row">
+        <h1>Validation des commandes</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date de la commande</th>
+                    <th>Créneau horaire</th>
+                    <th>Utilisateur</th>
+                    <th>Total</th>
+                    <th>Commande validé</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key,order in orders %}
+                    <tr>
+                        <td>{{ order.date|format_datetime(locale='fr') }}</td>
+                        <td>{{ order.timeSlot|format_datetime(locale='fr') }}</td>
+                        <td>{{ order.idUser.email }}</td>
+                        <td>{{ ordersTotal[key] / 100 }} €</td>
+                        <td>
+                            {% if order.checked == true %}
+                                <strong style="color: green;">Validée</strong>
+                            {% else %}
+                                <strong style="color: red;">Non validée</strong>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if order.checked == false %}
+                                <a class="btn btn-success" href="{{ path('validate_order', { id: order.id }) }}">Valider</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
