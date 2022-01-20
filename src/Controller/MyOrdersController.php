@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Order;
 use App\Entity\ArticleOrder;
 use App\Entity\Article;
+use App\Entity\User;
 
 
 class MyOrdersController extends AbstractController
@@ -87,7 +90,7 @@ class MyOrdersController extends AbstractController
     /**
      * @Route("/validate_order/{id}", name="validate_order")
      */
-    public function validateOrder(int $id): Response
+    public function validateOrder(int $id, MailerInterface $mailer): Response
     {
         $manager = $this->getDoctrine()->getManager();
 
@@ -98,6 +101,21 @@ class MyOrdersController extends AbstractController
         $manager->persist($order);
 
         $manager->flush();
+
+        $user = $order->getIdUser();
+
+        $email = (new TemplatedEmail())
+            ->from('turbo.shop01000@gmail.com')
+            ->to($user->getEmail())
+            ->subject('Votre commande a été validée par un vendeur !')
+            ->textTemplate('registration/email.html.twig');
+
+        $context = $email->getContext();
+        $context['content'] = "Merci d'avoir commandé sur notre site. Vous pourrez retirer votre commande au créneau choisi.";
+
+        $email->context($context);
+
+        $mailer->send($email);
 
         return $this->redirectToRoute('validation');
     }

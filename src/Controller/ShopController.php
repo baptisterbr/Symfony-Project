@@ -6,8 +6,10 @@ use App\Repository\ShopRepository;
 use App\Entity\Shop;
 use App\Entity\Message;
 use App\Entity\Article;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\MessageFormType;
 
@@ -38,7 +40,7 @@ class ShopController extends AbstractController
     /**
      * @Route("/shop/{id}", name="shop_list")
      */
-    public function show(int $id, Request $request): Response{
+    public function show(int $id, Request $request, MailerInterface $mailer): Response{
         $manager = $this->getDoctrine()->getManager();
         $shop = $manager->getRepository(Shop::class)->find($id);
 
@@ -56,6 +58,19 @@ class ShopController extends AbstractController
             
             $manager->persist($msg);
             $manager->flush();
+
+            $email = (new TemplatedEmail())
+                ->from('turbo.shop01000@gmail.com')
+                ->to($msg->getMail())
+                ->subject('Votre message a bien été envoyé !')
+                ->textTemplate('registration/email.html.twig');
+
+            $context = $email->getContext();
+            $context['content'] = "Un vendeur prendra connaissance de votre problème et traitera votre demande dans les plus brefs délais.";
+
+            $email->context($context);
+
+            $mailer->send($email);
         }
 
         return $this->render('shop/index.html.twig', [

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,11 +40,16 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $email = (new Email())
-                ->from('hello@example.com')
-                ->to('you@example.com')
+            $email = (new TemplatedEmail())
+                ->from('turbo.shop01000@gmail.com')
+                ->to($user->getEmail())
                 ->subject('Ravis de vous compter parmi nos clients !')
-                ->text('Vous venez de créer votre compte client TurboShop avec succès !');
+                ->textTemplate('registration/email.html.twig');
+
+            $context = $email->getContext();
+            $context['content'] = "Bonjour et bienvenue";
+
+            $email->context($context);
 
             $mailer->send($email);
 
