@@ -41,3 +41,4 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/confirm_basket, roles: ROLE_USER }
         - { path: ^/validation, roles: ROLE_ADMIN }
+        - { path: ^/message, roles: ROLE_ADMIN }
